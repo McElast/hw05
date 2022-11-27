@@ -1,0 +1,30 @@
+<h1>Все посты пользователя 
+{% if author.get_full_name %}
+  {{ author.get_full_name }} 
+{% else %}
+  {{ author.username }}
+{% endif %} </h1>
+<li class="list-group-item">
+  <div class="h6 text-muted">
+      Подписчиков: {{ author.following.count }}  <br />
+      Подписки: {{ author.follower.count }}
+  </div>
+</li>
+<h3>Всего постов: {{ author.posts.count }}</h3>
+{% if author.username != user.username %}
+  {% if following %}
+    <a
+      class="btn btn-lg btn-light"
+      href="{% url 'posts:profile_unfollow' author.username %}" role="button"
+    >
+      Отписаться
+    </a>
+  {% else %}
+    <a
+      class="btn btn-lg btn-primary"
+      href="{% url 'posts:profile_follow' author.username %}" role="button"
+    >
+      Подписаться
+    </a>
+  {% endif %}
+{% endif %}
